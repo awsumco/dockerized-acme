@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+ acme:
+  image: awsum/dockerized-acme
+  network_mode: bridge
+  restart: always
+  environment:
+   - DOMAINS=example.com example2.com 
+   - LIVEIP=127.0.0.1
+   - DNSSERVER=1.1.1.1
+   # - STAGEING='--directory-url https://acme-staging-v02.api.letsencrypt.org/directory'
+  container_name: acme
+  ports:
+   - 127.0.0.1:54321:80
+  volumes:
+   - ./data/acme/:/etc/acme/
+   - ./data/acme-challenges:/var/www/challenges/:rw
